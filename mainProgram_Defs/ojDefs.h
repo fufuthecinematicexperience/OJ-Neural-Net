@@ -246,7 +246,7 @@ class Tile
     void summonEnemy();
     EUnit* fightTileEnemy(EUnit* boss = nullptr);
     //funcs
-    Tile(int typeIn = TILE_BLANK, int xposIn, int yposIn, array<bool, 4> movesIn, bool doubler = false, int homeIDIn = 0);
+    Tile(int typeIn = TILE_BLANK, int xposIn, int yposIn, array<bool, 4> movesIn = {false, false, false, false}, bool doubler = false, int homeIDIn = 0);
     void landOn(Player* lander);
     void trapSet(TrapCard* trapToSet);
     void trapClear();

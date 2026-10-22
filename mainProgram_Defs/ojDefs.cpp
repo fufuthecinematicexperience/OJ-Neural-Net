@@ -177,14 +177,17 @@ Board::Board(){
     FillWithBlankTiles();
 }
 
-void Board::FillWithBlankTiles(){
+void Board::FillWithBlankTiles() {
     int vectorPos = 0;
     for(int y = 0; y < boardSize[1]; y++){
         for(int x = 0; x < boardSize[0]; x++){
-            if(tiles[vectorPos].xPos < x){
-                //dummy
+            if (vectorPos < tiles.size() && tiles[vectorPos].xPos == x && tiles[vectorPos].yPos == y) { //the tile exists, let's move on
+                vectorPos++;
+            } 
+            else {
+                tiles.insert(tiles.begin() + vectorPos, Tile(TILE_BLANK, x, y));
+                vectorPos++;
             }
-
         }
     }
 }
