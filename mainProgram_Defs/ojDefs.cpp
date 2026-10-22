@@ -206,11 +206,12 @@ void Board::killBoss(){
 }
 
 bool Board::tileAtExists(int xp, int yp){
-    //dummy
+    if(tiles[xp, yp].type != TILE_BLANK) return true;
+    else return false;
 }
 
 Tile* Board::tileAt(int xp, int yp){
-    //dummy
+    return &tiles[xp, yp];
 }
 
 void Board::SetWarpIndexes(){
@@ -324,8 +325,8 @@ int Player::PickCardFromHand(){
 
 void Player::TakeTurn(){
     if(!alive){
-        CheckEffects(TRIGGER_TURNSTART);
-        if(!alive){
+        CheckEffects(TRIGGER_TURNSTART); //we explicitly check this HERE rather than before the if because if an effect revives us, we don't want to act immediately, unless we're playing Tomato who can do that, but Tomato isn't here
+        if(!alive && !interrupt){
             int revAttempt = Roll();
             if(revAttempt >= (Rec() - revRolls)){
                 Revive();
@@ -333,10 +334,32 @@ void Player::TakeTurn(){
                 revRolls++;
             }
         }
-        CheckEffects(TRIGGER_TURNEND);
+    } else{
+        CheckEffects(TRIGGER_TURNSTART);
+        if(!interrupt){
+            int choice = 0;
+            bool canPlayCards = false;
+            for(int i = 0; i < hand.size(); i++){
+                if(hand[i].canPlay(this)){
+                    canPlayCards = true;
+                    return;
+                }
+            }
+            if(canPlayCards){
+                choice = Choose(CardOrMove);
+                if(choice == 0){
+                    PlayCard(PickCardFromHand());
+                }
+            }
+            if(!interrupt){
+                RollToMove();
+            }
+        }
     }
-    //dummy
+    CheckEffects(TRIGGER_TURNEND);
+    interrupt = false;
 }
+
 void Player::ResetKOStars(){starsLostOnKOMult = 0.5;} //should be called after every battle loss, since cards that adjust this number would do so on TRIGGER_BATTLELOSE
 void Player::ResetAddStarsMult(){AddStarsMult=1;} //should be called on AddStars
 
@@ -583,6 +606,7 @@ void Player::Draw(){
 }
 
 PlayerChoice CardOrBattle = {{"Cards", "Fight"}, {1, 1}, "Do you want to play a card or start the fight?"};
+PlayerChoice CardOrMove = {{"Cards", "Move"}, {1, 1}, "Do you want to play a card or roll to move?"};
 PlayerChoice DefEvd = {{"Defend", "Evade"}, {1, 1}, "Do you defend or evade?"};
 
 void EUnit::ResetStatMods(){
