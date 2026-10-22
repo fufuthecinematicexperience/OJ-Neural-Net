@@ -174,6 +174,19 @@ int Tile::DropFormula(const int roll, Player* lander){
 
 Board::Board(){
     SetWarpIndexes();
+    FillWithBlankTiles();
+}
+
+void Board::FillWithBlankTiles(){
+    int vectorPos = 0;
+    for(int y = 0; y < boardSize[1]; y++){
+        for(int x = 0; x < boardSize[0]; x++){
+            if(tiles[vectorPos].xPos < x){
+                //dummy
+            }
+
+        }
+    }
 }
 
 void Board::summonBoss(){
@@ -190,6 +203,14 @@ void Board::killBoss(){
         bossStars = 0;
         boss.resetHP();
     }
+}
+
+bool Board::tileAtExists(int xp, int yp){
+    //dummy
+}
+
+Tile* Board::tileAt(int xp, int yp){
+    //dummy
 }
 
 void Board::SetWarpIndexes(){
@@ -843,21 +864,82 @@ void Player::RollToMove(){
     CheckEffects(TRIGGER_MOVEROLL, moveRoll += Mov());
     moveRoll += Mov();
     if(!interrupt){
-        vector<Tile*> destinations = {};
+        vector<Tile*> destinations = { CurrTile() };
+        vector<Tile*> newDestinations = {};
+        vector<Tile*> fightDestinations = {};
+        vector<Player*> playersFightDestinations = {};
+        vector<Tile*> stopDestinations = {};
         int rollTemp = moveRoll;
+        int xposTemp = 0;
+        int yposTemp = 0;
+        bool wayOut = false;
         while(rollTemp > 0){
+            for(int i = 0; i = destinations.size(); i++){
+                wayOut = false;
+                xposTemp = destinations[i]->xPos;
+                yposTemp = destinations[i]->yPos;
+                if(destinations[i]->movesNWSE[0]){ //north
+                    yposTemp = yposTemp - 1;
+                    if(board->tileAt(xposTemp, yposTemp)){
+                        newDestinations.push_back(board->tileAt(xposTemp, yposTemp));
+                    }
+                    wayOut = true;
+                    yposTemp = yposTemp + 1;
+                }
+                if(destinations[i]->movesNWSE[1]){ //west
+                    xposTemp = xposTemp + 1;
+                    if(board->tileAt(xposTemp, yposTemp)){
+                        newDestinations.push_back(board->tileAt(xposTemp, yposTemp));
+                    }
+                    wayOut = true;
+                    xposTemp = xposTemp - 1;
+                }
+                if(destinations[i]->movesNWSE[2]){ //south
+                    yposTemp = yposTemp + 1;
+                    if(board->tileAt(xposTemp, yposTemp)){
+                        newDestinations.push_back(board->tileAt(xposTemp, yposTemp));
+                    }
+                    wayOut = true;
+                    yposTemp = yposTemp - 1;
+                }
+                if(destinations[i]->movesNWSE[3]){ //east
+                    xposTemp = xposTemp - 1;
+                    if(board->tileAt(xposTemp, yposTemp)){
+                        newDestinations.push_back(board->tileAt(xposTemp, yposTemp));
+                    }
+                    wayOut = true;
+                    xposTemp = xposTemp - 1;
+                }
+                if(!wayOut) newDestinations.push_back(destinations[i]);
+                if(destinations[i]->type == TILE_HOME && destinations[i]->homeID == pID()) stopDestinations.push_back(destinations[i]);
+                for(int i = 0; i < 4; i++){
+                    if(xposTemp == allPlayers[i]->XPos() && yposTemp == allPlayers[i]->YPos()){
+                        fightDestinations.push_back(destinations[i]);
+                        playersFightDestinations.push_back(allPlayers[i]);
+                    }
+                }
+            }
+            destinations = newDestinations;
+            newDestinations = {};
             rollTemp--;
         }
+        for(int i = 0; i < stopDestinations.size(); i++){
+            destinations.push_back(stopDestinations[i]);
+        }
+        if(destinations.size() + fightDestinations.size() > 1){
+            //dummy
+        } else{
+            currTile = destinations[0];
+        }
+        currTile->landOn(this);
     }
     interrupt = false;
-    //dummy
 }
 
-void Player::warpTo(Tile* warpTo){
+void Player::warpTo(Tile* warpTo){ //we explicitly dont trigger landing effects here
     CheckEffects(TRIGGER_WARP, 0, warpTo);
     if(!interrupt){
         currTile = warpTo;
     }
     interrupt = false;
-}//14 //21
-    //Battle Round Start //22
+}

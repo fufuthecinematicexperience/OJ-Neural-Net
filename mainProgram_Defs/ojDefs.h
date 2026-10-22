@@ -46,6 +46,7 @@
 #define TILE_WARP_DEADEND 5 //not sure if these exist in base orange juice but including to be sure
 #define TILE_MOVE 6
 #define TILE_DRAW 7
+#define TILE_BLANK 8
 
 #define DICE_NORMAL 0
 #define DICE_SPECS 1 //always returns 6
@@ -56,6 +57,26 @@
 
 #define GOAL_STARS 0
 #define GOAL_WINS 1
+
+//scary tile directional macros
+#define DIR_N {true, false, false, false}
+#define DIR_W {false, true, false, false}
+#define DIR_S {false, false, true, false}
+#define DIR_E {false, false, false, true}
+
+#define DIR_NW {true, true, false, false}
+#define DIR_WS {false, true, true, false}
+#define DIR_SE {false, false, true, true}
+#define DIR_EN {true, false, false, true}
+
+#define DIR_NWS {true, true, true, false}
+#define DIR_WSE {false, true, true, true}
+#define DIR_SEN {true, false, true, true}
+#define DIR_ENW {true, true, false, true}
+
+#define DIR_NWSE {true, true, true, true}
+//god i have so many macros
+//too many, one might argure. but such is life
 
 using namespace std;
 
@@ -225,7 +246,7 @@ class Tile
     void summonEnemy();
     EUnit* fightTileEnemy(EUnit* boss = nullptr);
     //funcs
-    Tile(int typeIn, int xposIn, int yposIn, array<bool, 4> movesIn, bool doubler = false, int homeIDIn = 0);
+    Tile(int typeIn = TILE_BLANK, int xposIn, int yposIn, array<bool, 4> movesIn, bool doubler = false, int homeIDIn = 0);
     void landOn(Player* lander);
     void trapSet(TrapCard* trapToSet);
     void trapClear();
@@ -240,7 +261,10 @@ class Board
 {
     private:
     void SetWarpIndexes();
+    void FillWithBlankTiles();
     public:
+    bool tileAtExists(int xp, int yp);
+    Tile* tileAt(int xp, int yp);
     vector<int> warpDestinationTiles;
     int boardSize[2];
     vector<Tile> tiles;
@@ -355,6 +379,8 @@ public:
     int DiceNum() const { return 1 + extraDiceNum + tempExtraDiceNum; }
     int Stars() const { return stars; }
     int Wins() const { return wins; }
+    int XPos() const { return currTile->xPos; }
+    int YPos() const { return currTile->yPos; }
     int Norma() const { return norma; }
     bool Battling() const { return inBattle; }
     bool StartedBattle() const { return startedBattle; }

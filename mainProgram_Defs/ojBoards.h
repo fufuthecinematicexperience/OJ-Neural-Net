@@ -3,25 +3,8 @@
 #include "ojDefs.h"
 #include "ojUnits.h"
 
-#define DIR_N {true, false, false, false}
-#define DIR_W {false, true, false, false}
-#define DIR_S {false, false, true, false}
-#define DIR_E {false, false, false, true}
-
-#define DIR_NW {true, true, false, false}
-#define DIR_WS {false, true, true, false}
-#define DIR_SE {false, false, true, true}
-#define DIR_EN {true, false, false, true}
-
-#define DIR_NWS {true, true, true, false}
-#define DIR_WSE {false, true, true, true}
-#define DIR_SEN {true, false, true, true}
-#define DIR_ENW {true, true, false, true}
-
-#define DIR_NWSE {true, true, true, true}
-
 class PuddingChase: public Board{
-	int boardSize[2] = {9, 9};
+	int boardSize[2] = {10, 9};
 	
 	vector<Tile> tiles = {Tile(TILE_BONUS, 4, 0, DIR_S), Tile(TILE_DROP, 5, 0, DIR_E), Tile(TILE_ENEMY, 6, 0, DIR_E), Tile(TILE_BONUS, 7, 0, DIR_E),
 		Tile(TILE_DRAW, 4, 1, DIR_S), Tile(TILE_WARP, 7, 1, DIR_N), Tile(TILE_DRAW, 8, 1, DIR_E), Tile(TILE_BONUS, 9, 1, DIR_E),
