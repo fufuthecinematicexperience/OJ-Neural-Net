@@ -98,7 +98,7 @@ struct PlayerChoice {
 
 class EUnit //weird class with some stuff from Unit and some stuff from Player
 {
-private:
+protected:
     string name;
     int stats[4];
     bool combatActions[3]={true,true,true};
@@ -133,7 +133,7 @@ struct PlayerChoice; //It's a mystery mousekatool that'll help us later!
 
 class Card
 {
-private:
+protected:
     string cardName;
     string cardDesc;
     int cardType;
@@ -157,7 +157,7 @@ public:
 };
 
 class BlankCard: public Card {
-private:
+protected:
     string cardName = "Hyper";
     string cardDesc = "This is a blank card. It does nothing, and should turn into a Hyper when drawn from the deck. If you see this, no you don't.";
     int cardType = CARD_BLANK;
@@ -168,7 +168,7 @@ private:
 };
 
 class BattleCard: public Card {
-private:
+protected:
     string cardName = "Battle Card";
     string cardDesc = "This is a template Battle Card. This shouldn't be seen in-game: if you see it, no you don't.";
     int cardType = CARD_BATTLE;
@@ -181,7 +181,7 @@ public:
 };
 
 class BoostCard: public Card {
-private:
+protected:
     string cardName = "Boost Card";
     string cardDesc = "This is a template Boost Card. This shouldn't be seen in-game: if you see it, no you don't.";
     int cardType = CARD_BOOST;
@@ -192,7 +192,7 @@ private:
 };
 
 class TrapCard: public Card {
-private:
+protected:
     string cardName = "Trap Card";
     string cardDesc = "This is a template Trap Card. This shouldn't be seen in-game: if you see it, no you don't.";
     int cardType = CARD_TRAP;
@@ -207,7 +207,7 @@ public:
 };
 
 class EventCard: public Card {
-private:
+protected:
     string cardName = "Event Card";
     string cardDesc = "This is a template Event Card. This shouldn't be seen in-game: if you see it, no you don't.";
     int cardType = CARD_EVENT;
@@ -253,6 +253,7 @@ class Tile
     void randoWarp(Player* lander);
     int BonusFormula(const int roll, Player* lander);
     int DropFormula(const int roll, Player* lander);
+    string printTile();
 }; //to be consistent with everything else and to be safer, most of this should be read-only with just getters
 //but the class would be twice as long just so...what, i don't change a tile's position in a random function by accident?
 //i trust myself enough to not do that
@@ -280,7 +281,7 @@ class Board
 
 class Effect
 {
-private:
+protected:
     int effID=-1;
     string effName="Blank";
     int stocks=-1;
@@ -297,7 +298,7 @@ public:
 
 class Unit
 {
-private:
+protected:
     string name;
     string desc;
     int stats[6];

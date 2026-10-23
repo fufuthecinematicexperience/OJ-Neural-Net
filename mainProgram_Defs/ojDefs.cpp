@@ -170,6 +170,36 @@ int Tile::BonusFormula(const int roll, Player* lander){
 int Tile::DropFormula(const int roll, Player* lander){
     return (roll * lander->Norma());
 }
+
+string Tile::printTile(){
+    string tileTypeAt = "Undefined";
+    switch(type){
+        case TILE_BONUS:
+        tileTypeAt = "Bonus";
+        break;
+        case TILE_DRAW:
+        tileTypeAt = "Draw";
+        break;
+        case TILE_DROP:
+        tileTypeAt = "Drop";
+        break;
+        case TILE_HOME:
+        tileTypeAt = "Home";
+        break;
+        case TILE_ENEMY:
+        tileTypeAt = "Enemy";
+        break;
+        case TILE_WARP:
+        case TILE_WARP_DEADEND:
+        tileTypeAt = "Warp";
+        break;
+        case TILE_MOVE:
+        tileTypeAt = "Move";
+        break;
+    }
+    return tileTypeAt + " at " + to_string(xPos) + "," + to_string(yPos);
+}
+
 //tile is fully defined
 
 Board::Board(){
@@ -209,12 +239,12 @@ void Board::killBoss(){
 }
 
 bool Board::tileAtExists(int xp, int yp){
-    if(tiles[xp, yp].type != TILE_BLANK) return true;
+    if(tiles[xp + (boardSize[1] * yp) - 1].type != TILE_BLANK) return true;
     else return false;
 }
 
 Tile* Board::tileAt(int xp, int yp){
-    return &tiles[xp, yp];
+    return &tiles[xp + (boardSize[1] * yp) - 1];
 }
 
 void Board::SetWarpIndexes(){
@@ -954,11 +984,34 @@ void Player::RollToMove(){
             destinations.push_back(stopDestinations[i]);
         }
         if(destinations.size() + fightDestinations.size() > 1){
-            //dummy
+            PlayerChoice destinationsPicker;
+            Tile* currChoice;
+            int pchoice = 0;
+            destinationsPicker.chooseMsg = "What tile do you want to move to?";
+            destinationsPicker.choiceNames[destinations.size() + fightDestinations.size()] = {"placeholder"};
+            for(int i = 0; i < destinations.size(); i++){
+                currChoice = destinations[i];
+                destinationsPicker.choiceNames[i] = "Land on " + currChoice->printTile();
+            }
+            for(int i = 0; i < fightDestinations.size(); i++){
+                currChoice = fightDestinations[i];
+                destinationsPicker.choiceNames[i + destinations.size()] = "Land on " + currChoice->printTile() + " (Fight " + to_string(playersFightDestinations[i]->pID()) + ")";
+            }
+            destinationsPicker.validChoices[destinations.size() + fightDestinations.size()] = {true};
+            pchoice = Choose(destinationsPicker);
+            if(pchoice > destinations.size() - 1){
+                pchoice = pchoice - destinations.size();
+                currTile = fightDestinations[pchoice];
+                StartBattle(playersFightDestinations[pchoice]);
+            } else{
+                currTile = destinations[pchoice];
+            }
         } else{
             currTile = destinations[0];
         }
-        currTile->landOn(this);
+        if(alive){
+            currTile->landOn(this);
+        }
     }
     interrupt = false;
 }

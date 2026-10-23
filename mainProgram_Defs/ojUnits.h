@@ -5,146 +5,206 @@
 
 class Kai: public Unit{
 	private:
-	string name = "Kai";
-	string desc= "";
-	Card hyper = Protagonist();
-	int stats[6] = {5, 1, 0, 0, 5, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Kai(){
+		name = "Kai";
+		desc= "";
+		hyper = Protagonist();
+		int realStats[6] = {5, 1, 0, 0, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Marc: public Unit{
 	private:
-	string name = "Marc";
-	string desc= "";
-	Card hyper = X16();
-	int stats[6] = {4, 1, 1, -1, 5, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Marc(){
+		name = "Marc";
+		desc= "";
+		hyper = X16();
+		int realStats[6] = {4, 1, 1, -1, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class QP: public Unit{
 	private:
-	string name = "QP";
-	string desc= "";
-	Card hyper = HyperMode();
-	int stats[6] = {5, 0, 0, 0, 5, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	QP(){
+		name = "QP";
+		desc= "";
+		hyper = HyperMode();
+		int realStats[6] = {5, 0, 0, 0, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Suguri: public Unit{
 	private:
-	string name = "Suguri";
-	string desc= "";
-	Card hyper = Accelerator();
-	int stats[6] = {4, 1, -1, 2, 5, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Suguri(){
+		name = "Suguri";
+		desc= "";
+		hyper = Accelerator();
+		int realStats[6] = {4, 1, -1, 2, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Poppo: public Unit{
 	private:
-	string name = "Marie Poppo";
-	string desc= "";
-	Card hyper = Ubiquitous();
-	int stats[6] = {7, -1, -1, -1, 5, 3}; //hp, atk, def, evd, rec, handsize
+	 
 	public:
+	Poppo(){
+		name = "Marie Poppo";
+		desc= "";
+		hyper = Ubiquitous();
+		int realStats[6] = {7, -1, -1, -1, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Tomomo: public Unit{
 	private:
-	string name = "Tomomo (Softened)";
-	string desc= "Softened: Tomomo is playing with her friends, and has lowered her attributes. Though, Singleplayer Tomomo doesn't even exist here, so this isn't a real passive.";
-	Card hyper = MagicalMassacre();
-	int stats[6] = {4, 2, 0, 0, 6, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Tomomo(){
+		name = "Tomomo (Softened)";
+		desc= "Softened: Tomomo is playing with her friends, and has lowered her attributes. Though, Singleplayer Tomomo doesn't even exist here, so this isn't a real passive.";
+		hyper = MagicalMassacre();
+		int realStats[6] = {4, 2, 0, 0, 6, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Fernet: public Unit{
 	private:
-	string name = "Fernet";
-	string desc= "";
-	Card hyper = AirStrike();
-	int stats[6] = {6, -1, 2, -2, 5, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Fernet(){
+		name = "Fernet";
+		desc= "";
+		hyper = AirStrike();
+		int realStats[6] = {6, -1, 2, -2, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Peat: public Unit{
 	private:
-	string name = "Peat";
-	string desc= "";
-	Card hyper = BlueCrow();
-	int stats[6] = {3, 1, 1, 1, 4, 3}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Peat(){
+		name = "Peat";
+		desc= "";
+		hyper = BlueCrow();
+		int realStats[6] = {3, 1, 1, 1, 4, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Yuki: public Unit{
 	private:
-	string name = "Yuki";
-	string desc= "";
-	Card hyper = Gamble();
-	int stats[6] = {5, 2, -1, -1, 5, 3}; //hp, atk, def, evd, rec, handsize
+
 	public:
+	Yuki(){
+		name = "Yuki";
+		desc= "";
+		hyper = Gamble();
+		int realStats[6] = {5, 2, -1, -1, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Aru: public Unit{
 	private:
-	string name = "Aru";
-	string desc= "";
-	Card hyper = PresentForYou();
-	int stats[6] = {5, -1, -1, 2, 5, 4}; //hp, atk, def, evd, rec, handsize
+	
 	public:
+	Aru(){
+		name = "Aru";
+		desc= "";
+		hyper = PresentForYou();
+		int realStats[6] = {5, -1, -1, 2, 5, 4}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Hime: public Unit{
 	private:
-	string name = "Hime";
-	string desc= "";
-	Card hyper = Chains();
-	int stats[6] = {5, 1, -1, 1, 5, 3}; //hp, atk, def, evd, rec, handsize
+
 	public:
+	Hime(){
+		name = "Hime";
+		desc= "";
+		hyper = Chains();
+		int realStats[6] = {5, 1, -1, 1, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Sora: public Unit{
 	private:
-	string name = "Sora";
-	string desc= "";
-	Card hyper = Specs();
-	int stats[6] = {4, 1, 0, 1, 5, 3}; //hp, atk, def, evd, rec, handsize
+
 	public:
+	Sora(){
+		name = "Sora";
+		desc = "";
+		hyper = Specs();
+		int realStats[6] = {4, 1, 0, 1, 5, 3}; //hp, atk, def, evd, rec, handsize
+		copy(begin(realStats), end(realStats), begin(stats));
+	}
 };
 
 class Gull: public EUnit{
 	private:
-	string name = "Johnathan";
-	string desc= "";
-	int stats[4] = {3, 1, -1, -1};
-	int curHP = 3;
+	
 	public:
+	Gull(){
+		name = "Johnathan";
+		int realStats[4] = {3, 1, -1, -1};
+		copy(begin(realStats), end(realStats), begin(stats));
+	 	curHP = 3;
+	}
 };
 
 class Ball: public EUnit{
 	private:
-	string name = "Robo Ball";
-	string desc= "";
-	int stats[4] = {3, -1, 1, -1};
-	int curHP = 3;
+	
 	public:
+	Ball(){
+		name = "Robo Ball";
+		int realStats[4] = {3, -1, 1, -1};
+		copy(begin(realStats), end(realStats), begin(stats));
+		curHP = 3;
+	}
 };
 
 class Chicken: public EUnit{
 	private:
-	string name = "Haruo";
-	string desc= "";
-	int stats[4] = {3, -1, -1, 1};
-	int curHP = 3;
+	
 	public:
+	Chicken(){
+		name = "Haruo";
+		int realStats[4] = {3, -1, -1, 1};
+		copy(begin(realStats), end(realStats), begin(stats));
+		curHP = 3;
+	}
 };
 
 class Manager: public EUnit{
 	private:
-	string name = "Store Manager";
-	string desc= "";
-	int stats[4] = {8, 3, 2, -1};
-	int curHP = 8;
+
 	public:
+	Manager(){
+		name = "Store Manager";
+	 	int realStats[4] = {8, 3, 2, -1};
+		copy(begin(realStats), end(realStats), begin(stats));
+	 	curHP = 8;
+	}
 	bool IsBoss() { return true; }
 };
 

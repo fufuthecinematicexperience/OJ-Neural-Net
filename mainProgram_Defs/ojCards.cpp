@@ -110,10 +110,7 @@ void DangerousPuddingEff::Enact(Player* effOwner, int triggerID, int optionalNum
         }
     }
 
-OutOfAmmoEff::OutOfAmmoEff(int pIDStarted, int turnStarted){ //yes the only difference between the variables and the class variables is capitalization this is terrible style i've been working on this since friday nearly nonstop and it's thursday I don't think it matters that much.
-    pidstarted = pIDStarted;
-    turnstarted = turnStarted;
-}
+
 
 void OutOfAmmoEff::Enact(Player* effOwner, int triggerID, int optionalNum, Tile* optTile, EUnit* optEnemy, Player* optPlyr, Card optCard){
         switch(triggerID){
