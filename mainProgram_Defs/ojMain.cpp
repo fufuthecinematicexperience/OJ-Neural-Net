@@ -7,6 +7,7 @@
 #include "ojDefs.h"
 #include "ojCards.h"
 #include "ojBoards.h"
+#include <numeric>
 
 using namespace std;
 
@@ -24,6 +25,8 @@ vector<Card> deckableCardList = {Dash(),Cookie(),Pudding(),NicePresent(),Jingle(
     //testing skill shouldn't be too hard (I want a performance assesment like "can the neural network consistently outperform the random choice picker?")
     //but it might be better to have a more updated card list.
     //however that would suuuuuuuuuuuuuuuuuuuuuuuuuuck to implement so I'm not doing it right now
+
+PuddingChase boardPudding;
 
 namespace { //so other files don't break
     random_device rd;
@@ -49,7 +52,32 @@ vector<Card> RandomCardDeck(){
     return randomCardVecs;
 }
 
+//
+
+void mainPrintBoard(const Board& inpBoard){
+    array<vector<string>, 3> printArr = {{{}, {}, {}}};
+    int yPosChecker = 0;
+    vector<Tile> boardTiles = inpBoard.tiles;
+    cout<<boardTiles[0].type;
+    for(int i = 0; i < inpBoard.tiles.size(); i++){
+        if(boardTiles[i].yPos > yPosChecker){
+            cout<<reduce(printArr[0].begin(), printArr[0].end())<<endl<<reduce(printArr[1].begin(), printArr[1].end())<<endl<<reduce(printArr[2].begin(), printArr[2].end())<<endl;
+            yPosChecker = boardTiles[i].yPos;
+            printArr = {{{}, {}, {}}};
+        }
+        if(boardTiles[i].type == TILE_BLANK){
+            printArr[0].push_back("     ");
+            printArr[1].push_back("     ");
+            printArr[2].push_back("     ");
+        } else{
+            printArr[0].push_back("-----");
+            printArr[1].push_back("|   |");
+            printArr[2].push_back("-----");
+        }
+    }
+}
+
 int main(){
-    cout<<"successfully ordered 1 billion liquid tons of balsamic vinegar"<<endl;
+    mainPrintBoard(boardPudding);
     return 0;
 }
